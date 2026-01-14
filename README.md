@@ -6,25 +6,21 @@ Currently, only the **architecture and scoping decisions** have been implemented
 ## Goal:
 A daily options strategy that can be backtested and paper-traded safely, with explicit risk controls and realistic execution assumptions.
 
+
 --- 
+## Key Design Choices (so far)
+- Context
+  - Daily
+  - SPY (for liquidity)
+  - Option Type = "European" but added an option to extend to American later
+  - Minimal ML, No AI
 
-## Project Scope (so far)
-
-- **Immutable design**  
-  All core objects (Portfolio, Position, OptionContract) are intended to be frozen dataclasses.
-
-- **Minimal ML / AI placeholders**  
-  Planning for future regime tagging or signal processing. 
-
-- **Repository structure set up**  
-  - `src/` for main code  
-  - `tests/` for unit tests  
-  - `pyproject.toml` for project metadata / dependencies
-
-- **Testing framework initialized**  
-  - Minimal `pytest` setup to ensure the repository runs without errors
-
----
+#### Arch Choices 
+- Python classes are immutable
+  - Better for scaling and concurrency
+  - Will break at high frequency but ok for this use case
+- Backtest uses the SAME portfolio & pricing logic as live
+  - Seems self-explanitory but doing this increases accuracy of backtesting
 
 ## Project Structure
 
