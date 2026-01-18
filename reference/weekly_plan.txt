@@ -1,0 +1,68 @@
+WEEK 0 — PROJECT FRAMING & GUARDRAILS
+Theme: Lock architecture before writing logic
+Initialize repository
+Create README with scope, in-scope, out-of-scope
+Decide on immutability (frozen dataclasses)
+Decide on minimal / optional ML usage
+Set up pyproject.toml
+Set up pytest
+Verify pytest runs without errors
+
+WEEK 1 — DOMAIN PRIMITIVES
+Theme: Define the objects that exist in the system
+Define OptionContract (symbol, expiry, strike, call/put, exercise style)
+Define Position (option, quantity, entry price)
+Define Portfolio (cash, tuple of positions)
+Enforce immutability everywhere
+Implement repr and eq via dataclasses
+Add basic sanity tests for object creation
+
+WEEK 2 — PORTFOLIO MATH & VALUATION
+Theme: Compute values without mutating state
+Define OptionPricer interface
+Add position market value method (returns float)
+Add position unrealized PnL method (returns float)
+Add portfolio total market value method
+Add portfolio total unrealized PnL method
+Pass pricer explicitly (no hidden dependencies)
+Write unit tests for valuation math
+
+WEEK 3 — OPTION PRICING
+Theme: Separate pricing from portfolio logic
+Implement Black-Scholes pricer (European)
+Compute Greeks as immutable value object
+Validate pricing against known values
+Add placeholder for American pricer
+Write tests for pricing accuracy
+
+WEEK 4 — PERSISTENCE & SNAPSHOTS
+Theme: Make results reproducible
+Define PortfolioSnapshot object
+Persist snapshots to SQLite (append-only)
+Store valuation inputs and outputs
+Load snapshots for replay
+Test snapshot round-trip consistency
+
+WEEK 5 — STRATEGIES & TRADES
+Theme: Express intent, not execution
+Define Trade object (open / close)
+Implement basic options strategies (e.g., Iron Condor)
+Strategy outputs trades, not side effects
+Apply trades to portfolio immutably
+Test strategy invariants
+
+WEEK 6 — BACKTESTING LOOP
+Theme: Run the system over time
+Build backtest runner
+Iterate over market data
+Apply strategies per timestep
+Generate portfolio snapshots
+Produce PnL time series
+
+OPTIONAL WEEK — REGIME TAGGING
+Theme: Lightweight AI signal without overreach
+Define regime categories (volatility, trend)
+Implement simple heuristic or classifier
+Attach regime tag to snapshots
+Use regime as conditional input to strategies
+Keep regime logic read-only and optional
